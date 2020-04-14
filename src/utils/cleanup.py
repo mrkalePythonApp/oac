@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for cleaning OpenAPI content."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -172,8 +172,11 @@ def reorder_components(content: Dict) -> Dict:
     key_section = 'components'
     if key_section in content and isinstance(content[key_section], dict):
         target = {}
-        for comp_prop in Parameter.COMPONENTS.value:
-            if comp_prop in content[key_section]:
-                target.setdefault(comp_prop, content[key_section][comp_prop])
+        for comp_prop in sorted(content[key_section].keys()):
+            target.setdefault(comp_prop, {})
+            # Sort components' subproperties
+            for key in sorted(content[key_section][comp_prop].keys()):
+                target[comp_prop].setdefault(
+                    key, content[key_section][comp_prop][key])
         content[key_section] = target
     return content

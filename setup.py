@@ -8,7 +8,7 @@ setup(
     description='OpenAPI CLI tools',
     long_description='Set of utilities for processing OpenAPI documents.',
     long_description_content_type='text/plain',
-    version='0.1.0',
+    version='0.2.0',
     author='Libor Gabaj',
     author_email='libor.gabaj@gmail.com',
     classifiers=[
@@ -17,7 +17,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Utilities',
     ],
-    keywords='OpenAPI, OAS, OAS3, bundle, orphans, paths, prune',
+    keywords='OpenAPI, OAS, OAS3',
     url='http://github.com/mrkalePythonApp/oac',
     license='MIT',
     install_requires=['click', 'pyyaml', 'tabulate'],

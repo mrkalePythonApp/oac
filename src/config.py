@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for configuration parameters and intermodule data exchange."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -32,9 +32,6 @@ class Parameter(Enum):
     NONE = 'N/A'
     HTTP_METHODS = ['GET', 'PUT', 'POST', 'DELETE',
                     'OPTIONS', 'HEAD', 'PATCH', 'TRACE']
-    COMPONENTS = ['securitySchemes', 'parameters', 'headers',
-                  'requestBodies', 'responses', 'schemas', 'links',
-                  'callbacks', 'examples', ]
 
 class Format(Enum):
     """Enumeration of OpenAPI document format."""
@@ -95,7 +92,6 @@ class FileCache:
     records: List[OpenAPI] = field(default_factory=list)
     # Processing mode flags
     dereference_internals: bool = False
-    dereference_once: bool = False
     dereference_import: bool = False
 
     @property

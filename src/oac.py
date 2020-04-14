@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Utilities for manipulating OpenAPI 3 documents."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -103,7 +103,6 @@ def oac_paths(openapi_file: str, color: bool) -> NoReturn:
     try:
         record = load_openapi_file(openapi_file)
         cfg.CACHE.reg_record(record)
-        cfg.CACHE.dereference_once = True
         paths.paths(record, color)
     except (ValueError, FileNotFoundError, EOFError, SyntaxError) as err:
         raise click.BadParameter(err)
