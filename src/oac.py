@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Utilities for manipulating OpenAPI 3 documents."""
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -60,7 +60,7 @@ def oac_bundle(openapi_file: str, deref: bool, outformat: str) -> NoReturn:
         record = load_openapi_file(openapi_file)
         cfg.CACHE.reg_record(record)
         cfg.CACHE.dereference_import = True
-        cfg.CACHE.dereference_internals = deref
+        cfg.CACHE.dereference_deep = deref
         if outformat:
             outformat = cfg.Format.JSON if outformat == 'json' \
                 else cfg.Format.YAML

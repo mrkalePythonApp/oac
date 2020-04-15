@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for cleaning OpenAPI content."""
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -19,31 +19,6 @@ from src.config import Parameter
 import src.utils.reference as ref
 
 
-def remove_empty_refs(content: Dict) -> Dict:
-    """Remove references with empty strings as a marking from dereference.
-
-    Arguments
-    ---------
-    content
-        OpenAPI document to be cleaned up.
-
-    Returns
-    -------
-    OpenAPI document without useless references.
-
-    """
-    if isinstance(content, list):
-        for key, value in enumerate(content):
-            content[key] = remove_empty_refs(value)
-    if isinstance(content, dict):
-        for key in list(content.keys()):
-            if key == '$ref' and not content[key]:
-                del content[key]
-            else:
-                content[key] = remove_empty_refs(content[key])
-    return content
-
-
 def remove_empty_objects(content: Dict) -> Dict:
     """Remove dictionary keys with empty values.
 
@@ -59,11 +34,20 @@ def remove_empty_objects(content: Dict) -> Dict:
     """
     if isinstance(content, list):
         for key, value in enumerate(content):
-            content[key] = remove_empty_objects(value)
+            ref_content = remove_empty_objects(value)
+            if isinstance(ref_content, list) and not ref_content:
+                del content[key]
+            else:
+                content[key] = ref_content
     if isinstance(content, dict):
         for key in list(content.keys()):
-            if not content[key] and isinstance(content[key], dict):
+            if isinstance(content[key], dict) and not content[key]:
                 del content[key]
+            elif isinstance(content[key], list) and not content[key]:
+                del content[key]
+            # Security basic authorization should be empty naturally
+            elif key == 'security':
+                continue
             else:
                 content[key] = remove_empty_objects(content[key])
     return content

@@ -5,10 +5,10 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name='oac',
-    description='OpenAPI CLI tools',
-    long_description='Set of utilities for processing OpenAPI documents.',
+    description='OpenAPI 3 CLI utilities',
+    long_description='Set of utilities for processing OpenAPI 3 documents.',
     long_description_content_type='text/plain',
-    version='0.2.0',
+    version='0.3.0',
     author='Libor Gabaj',
     author_email='libor.gabaj@gmail.com',
     classifiers=[
@@ -22,7 +22,6 @@ setup(
     license='MIT',
     install_requires=['click', 'pyyaml', 'tabulate'],
     packages=find_namespace_packages(),
-    # package_data={'': ['*.txt']},
     include_package_data=True,
     entry_points={
         'console_scripts': [

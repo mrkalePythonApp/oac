@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for bundling OpenAPI files."""
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -37,6 +37,7 @@ def bundle(record: cfg.OpenAPI, outformat: cfg.Format = None) -> NoReturn:
     # Cleanup
     content = dereference(record.oas, record.oasfile)
     content, _, _ = clean.remove_unused_components(content)
+    content = clean.remove_empty_objects(content)
     content = clean.reorder_components(content)
     # Output
     out(content, outformat or record.oastype)

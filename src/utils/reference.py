@@ -63,8 +63,10 @@ def dereference(content: Dict, source_file: str) -> Dict:
                     ref_content = get_ref_content(
                         record_target, target_fragments)
                     if ref_content is None:
+                        if cfg.CACHE.dereference_deep:
+                            del content[ref_key]
                         continue
-                    elif cfg.CACHE.dereference_internals:
+                    elif cfg.CACHE.dereference_deep:
                         content = ref_content
                     elif target_fragments[0] == 'paths':
                         content = ref_content
