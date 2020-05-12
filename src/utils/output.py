@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for printing results to the standard console output."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -53,7 +53,7 @@ def dump_yaml(data: List) -> NoReturn:
 
 def dump_json(data: List) -> NoReturn:
     """Print serialized JSON content."""
-    result = json.dumps(data, indent=2)
+    result = json.dumps(data, indent=2, ensure_ascii=False)
     click.echo(result)
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Utilities for manipulating OpenAPI 3 documents."""
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -22,6 +22,7 @@ import src.commands.paths as paths
 import src.commands.bundle as bundle
 import src.commands.prune as prune
 import src.commands.orphans as orphans
+import src.commands.convert as convert
 
 
 # def get_file(ctx, param, value):
@@ -130,6 +131,21 @@ def oac_prune(openapi_file: str, outformat: str) -> NoReturn:
             outformat = cfg.Format.JSON if outformat == 'json' \
                 else cfg.Format.YAML
         prune.prune(record, outformat)
+    except (ValueError, FileNotFoundError, EOFError, SyntaxError) as err:
+        raise click.BadParameter(err)
+
+
+@oac.command('convert')
+@click.argument('openapi_file', required=True,
+                type=click.Path(exists=True),
+                )
+@click.version_option(prune.__version__, prog_name='OpenAPI Convert')
+def oac_convert(openapi_file: str) -> NoReturn:
+    """Convert OpenAPI file to opposite format between YAML and JSON."""
+    try:
+        record = load_openapi_file(openapi_file)
+        cfg.CACHE.reg_record(record)
+        convert.convert(record)
     except (ValueError, FileNotFoundError, EOFError, SyntaxError) as err:
         raise click.BadParameter(err)
 

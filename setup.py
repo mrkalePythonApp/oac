@@ -8,7 +8,7 @@ setup(
     description='OpenAPI 3 CLI utilities',
     long_description='Set of utilities for processing OpenAPI 3 documents.',
     long_description_content_type='text/plain',
-    version='0.3.0',
+    version='0.4.0',
     author='Libor Gabaj',
     author_email='libor.gabaj@gmail.com',
     classifiers=[
@@ -30,6 +30,7 @@ setup(
             'oac_orphans = src.oac:oac_orphans',
             'oac_paths = src.oac:oac_paths',
             'oac_prune = src.oac:oac_prune',
+            'oac_convert = src.oac:oac_convert',
         ],
     },
     zip_safe=False

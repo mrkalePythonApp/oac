@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for processing files and folders."""
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -21,7 +21,7 @@ import src.config as cfg
 
 
 def load_openapi_file(openapi_file: str) -> cfg.OpenAPI:
-    """Load correct OpenAPI file.
+    """Load correct OpenAPI file and detect its format.
 
     Arguments
     ---------
