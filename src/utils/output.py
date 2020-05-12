@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for printing results to the standard console output."""
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -47,7 +47,7 @@ def dump_yaml(data: List) -> NoReturn:
             return True
 
     result = yaml.dump(data, default_flow_style=False, sort_keys=False,
-                       Dumper=NoAliasDumper)
+                       Dumper=NoAliasDumper, allow_unicode=True)
     click.echo(result)
 
 

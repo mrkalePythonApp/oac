@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for converting format of an OpenAPI file."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -19,7 +19,7 @@ import src.config as cfg
 from src.utils.output import output_content as out
 
 
-def convert(record: cfg.OpenAPI) -> NoReturn:
+def convert(record: cfg.OpenAPI, outformat: cfg.Format = None) -> NoReturn:
     """Print OpenAPI content of the provided OpenAPI file record.
 
     Arguments
@@ -27,15 +27,13 @@ def convert(record: cfg.OpenAPI) -> NoReturn:
     record
         OpenAPI file record, which should be converted. The record with
         valid OpenAPI file is assumed. It can contain external references too.
+    outformat
+        Enumeration member of an requested OpenAPI content format for output
+        to the system console.
 
     """
     content = record.oas
-    # Set output format
-    if record.oastype == cfg.Format.YAML:
-        outformat = cfg.Format.JSON
-    elif record.oastype == cfg.Format.JSON:
-        outformat = cfg.Format.YAML
-    else:
-        outformat = record.oastype
     # Output
-    out(content, outformat)
+    out(content, outformat \
+        or cfg.Format.JSON if record.oastype == cfg.Format.YAML \
+        else cfg.Format.YAML)

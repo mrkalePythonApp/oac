@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Utilities for manipulating OpenAPI 3 documents."""
-__version__ = '0.4.0'
+__version__ = '0.5.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -122,7 +122,7 @@ def oac_prune(openapi_file: str, outformat: str) -> NoReturn:
        Output result in original or forced format.
 
        All unreferenced components (in schemas, securitySchemes, parameters,
-       heades, requestBodies, responses, ...) are removed from the result.
+       headers, requestBodies, responses, ...) are removed from the result.
     """
     try:
         record = load_openapi_file(openapi_file)
@@ -139,13 +139,22 @@ def oac_prune(openapi_file: str, outformat: str) -> NoReturn:
 @click.argument('openapi_file', required=True,
                 type=click.Path(exists=True),
                 )
-@click.version_option(prune.__version__, prog_name='OpenAPI Convert')
-def oac_convert(openapi_file: str) -> NoReturn:
-    """Convert OpenAPI file to opposite format between YAML and JSON."""
+@click.option('-f', '--format', 'outformat',
+              type=click.Choice(['yaml', 'json']), required=False,
+              help='Forced output format.')
+@click.version_option(convert.__version__, prog_name='OpenAPI Convert')
+def oac_convert(openapi_file: str, outformat: str) -> NoReturn:
+    """Convert OpenAPI file.
+       Output result is in opposite format between YAML and JSON
+       or in forced format.
+    """
     try:
         record = load_openapi_file(openapi_file)
         cfg.CACHE.reg_record(record)
-        convert.convert(record)
+        if outformat:
+            outformat = cfg.Format.JSON if outformat == 'json' \
+                else cfg.Format.YAML
+        convert.convert(record, outformat)
     except (ValueError, FileNotFoundError, EOFError, SyntaxError) as err:
         raise click.BadParameter(err)
 
