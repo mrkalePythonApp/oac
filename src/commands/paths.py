@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module for listing HTTP methods of an OpenAPI file."""
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
@@ -17,8 +17,8 @@ import click
 
 # Internal modules
 import src.config as cfg
-from src.utils.reference import dereference
-from src.utils.filesystem import get_relpath
+from src.utils.reference import dereference, parse
+from src.utils.filesystem import get_relpath, resolve_filepath
 from src.utils.output import print_table as table, output_preamble as preamble
 
 
@@ -44,6 +44,14 @@ def paths(record: cfg.OpenAPI, color: bool = False) -> NoReturn:
     if paths_key in record.oas.keys() and record.oas[paths_key]:
         # List all endpoints
         for path_key, path_value in record.oas[paths_key].items():
+            # Detect definition file
+            oasfile = record.oasfile
+            ref_key = '$ref'
+            path_ref = path_value.get(ref_key)
+            if path_ref:
+                oasfile, _ = parse(path_value[ref_key])
+                oasfile = resolve_filepath(oasfile, record.oasfile)
+            oasfile = get_relpath(oasfile, record.oasfile)
             # Dereference a path specification
             path_value = dereference(path_value, record.oasfile)
             if not path_value:
@@ -59,8 +67,6 @@ def paths(record: cfg.OpenAPI, color: bool = False) -> NoReturn:
                     continue
                 method_id = method_value.get('operationId',
                                              cfg.Parameter.NONE.value)
-                oasfile = cfg.CACHE.get_record_last().oasfile
-                oasfile = get_relpath(oasfile, record.oasfile)
                 paths_list.append(cfg.Method(
                     name=method_name,
                     operid=method_id,

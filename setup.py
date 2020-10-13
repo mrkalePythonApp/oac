@@ -8,7 +8,7 @@ setup(
     description='OpenAPI 3 CLI utilities',
     long_description='Set of utilities for processing OpenAPI 3 documents.',
     long_description_content_type='text/plain',
-    version='0.5.0',
+    version='0.6.0',
     author='Libor Gabaj',
     author_email='libor.gabaj@gmail.com',
     classifiers=[

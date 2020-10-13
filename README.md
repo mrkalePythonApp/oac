@@ -23,6 +23,7 @@ python setup.py install
 
 - [oac](#oac) - Main utility (OpenAPI CLI)
 - [oac_bundle](#bundle) - Bundle OpenAPI file with its referenced ones
+- [oac_convert](#convert) - Convert OpenAPI file
 - [oac_orphans](#orphans) - List unreferenced components in OpenAPI file
 - [oac_paths](#paths) - List HTTP methods from OpenAPI file
 - [oac_prune](#prune) - Cleanup OpenAPI file
@@ -62,6 +63,7 @@ Options:
 
 Commands:
   bundle   Bundle OpenAPI file with its referenced ones.
+  convert  Convert OpenAPI file to opossite format or input one.
   orphans  List unreferenced components in OpenAPI file.
   paths    List HTTP methods from OpenAPI file.
   prune    Cleanup OpenAPI file.
@@ -90,6 +92,26 @@ it does not have any unreferenced components.
 
 Options:
   -d, --dereference         Deep dereference.
+  -f, --format [yaml|json]  Forced output format.
+  --version                 Show the version and exit.
+  --help                    Show this message and exit.
+```
+
+
+<a id="convert"></a>
+## oac_convert (OpenAPI Conversion)
+
+The utility converts the content of an input file to output format.
+If no output format is forced, the content is converted to the opposite
+format between YAML and JSON.
+No bundling or dereferencing is provided whatsoever.
+```
+Usage: oac_convert [OPTIONS] OPENAPI_FILE
+
+  Convert OpenAPI file. Output result is in opposite format between YAML and
+  JSON or in forced format.
+
+Options:
   -f, --format [yaml|json]  Forced output format.
   --version                 Show the version and exit.
   --help                    Show this message and exit.

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Utilities for manipulating OpenAPI 3 documents."""
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 __status__ = 'Beta'
 __author__ = 'Libor Gabaj'
 __copyright__ = 'Copyright 2020, ' + __author__
